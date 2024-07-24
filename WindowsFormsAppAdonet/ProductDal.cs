@@ -6,7 +6,7 @@ using System.Data.SqlClient; // ado.net kütüphanesi
 
 namespace WindowsFormsAppAdonet
 {
-    internal class ProductDal
+    public class ProductDal
     {
         SqlConnection _connection = new SqlConnection(@"server=(LocalDB)\MSSQLLocalDB; database=UrunYonetimiAdoNet; Integrated security=True"); // sql server veritabanına baglantı kurmayı saglayan nesnemiz
     private void ConnectionKontrol()//Veritabanı baglantısının acık olup olmadıgını kontrol eden metot
@@ -104,7 +104,7 @@ namespace WindowsFormsAppAdonet
         {
             ConnectionKontrol();
             SqlCommand command = new SqlCommand(
-               "Update Products set UrunAdi=@Uadi, UrunFiyati=@UrunFiyati, StokMiktari=@StokMiktari, Durum=@Durum where Id=id", _connection );
+               "Update Products set UrunAdi=@Uadi, UrunFiyati=@UrunFiyati, StokMiktari=@StokMiktari, Durum=@Durum where Id=@id", _connection );
             command.Parameters.AddWithValue("@Uadi", product.UrunAdi);
             command.Parameters.AddWithValue("@UrunFiyati", Convert.ToDecimal(product.UrunFiyati));
             command.Parameters.AddWithValue("@StokMiktari", product.StokMiktari);
@@ -117,9 +117,10 @@ namespace WindowsFormsAppAdonet
         public int Delete(int id)
         {
             ConnectionKontrol();
-            SqlCommand command = new SqlCommand("Delete from Products where Id=@id", _connection);
+            SqlCommand command = new SqlCommand("delete from Products where Id=@id", _connection);
             command.Parameters.AddWithValue("@id", id);
             int sonuc = command.ExecuteNonQuery();
+            command.Dispose();
             _connection.Close();
             return sonuc;
         }
