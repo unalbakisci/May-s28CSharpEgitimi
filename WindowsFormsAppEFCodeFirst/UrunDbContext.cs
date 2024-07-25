@@ -10,6 +10,7 @@ namespace WindowsFormsAppEFCodeFirst
     internal class UrunDbContext : DbContext // UrunDbContext  bizim veritabanı yönetim contextimiz, DbContext ise entity framework ün
     {
         public DbSet<Entities.Product> Products { get; set; }//Entity framework de veritabanı tablolarımızı programımızla eşleştiren kısım. //Products Sql  veritabanındaki Products tablosuna karsılık gelir.
+        public DbSet<Entities.Category> Categories { get; set; }
         /*
          * Projede Entity framework kullanmak için yapılacaklar;
          * Projeye sağ tıklayıp açılan menüden Nuget yazana tıklayıp paket yönetici ekranını açıyoruz
